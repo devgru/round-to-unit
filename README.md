@@ -1,6 +1,6 @@
 # round-to-precision
 
-> Round a number to a specific precision.
+> Round a number to a specific precision. Useful in user interfaces.
 
 
 ## Install
@@ -15,8 +15,11 @@ $ npm install --save round-to-precision
 ```js
 var roundToPrecision = require('round-to-precision');
 
-roundToPrecision(0.25)(0.7);
-//=> 0.75
+roundToPrecision(10)(52.65);
+//=> 50
+
+roundToPrecision(0.25)(-0.7);
+//=> -0.75
 
 roundToPrecision(0.1)(0.36);
 //=> 0.4
@@ -28,7 +31,7 @@ Numbers are rounded to a specific precision.
 
 ### roundToPrecision(precision)
 
-Returns a function, wou
+Returns a `roundToSpecificPrecision` function.
 
 ### roundToSpecificPrecision(value)
 
@@ -40,10 +43,7 @@ Type: `number`
 
 #### precision
 
-Type: `number`
-
-Number of decimal places.
-
+Type: `number` (positive).
 
 ## License
 
