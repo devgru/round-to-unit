@@ -1,50 +1,46 @@
 # round-to-precision
 
-> Round a number to a specific precision. Useful in user interfaces.
+> Round a number to a nearest multiple to . Useful in user interfaces.
+
+This library provides rounding function which is useful when you need to convert some raw user input (e.g. pointer coordinates) into nice values that are multiples to specified *step*.
 
 
-## Install
+## Installing
 
-```
+```sh
 $ npm install --save round-to-precision
 ```
-
 
 ## Usage
 
 ```js
-var roundToPrecision = require('round-to-precision');
+const roundTo = require('round-to-precision');
 
-roundToPrecision(10)(52.65);
-//=> 50
+const roundToTens = roundTo(10);
+roundToTens(52.65);
+//=> "50"
 
-roundToPrecision(0.25)(-0.7);
-//=> -0.75
+const roundToQuarters = roundTo(0.25);
+roundToQuarters(-0.7);
+//=> "-0.75"
 
-roundToPrecision(0.1)(0.36);
+const roundToOneTenths = roundTo(0.1, Number);
+roundToOneTenths(0.36);
 //=> 0.4
 ```
 
-Numbers are rounded to a specific precision.
+## API Reference
 
-## API
+*roundTo(step, [outputType = String])*
 
-### roundToPrecision(precision)
+Given a positive number *step*, returns a *roundToStep* function.
 
-Returns a `roundToSpecificPrecision` function.
+An optional *outputType* allows overriding return type of *roundToStep* function, e.g. set it to *Number*.
 
-### roundToSpecificPrecision(value)
+*roundToStep(value)*
 
-Round a value to specific precision.
-
-#### value
-
-Type: `number`
-
-#### precision
-
-Type: `number` (positive).
+Given a number *value*, rounds *value* and returns it as a *String* or uses provided *outputType* to transform it into another type.
 
 ## License
 
-MIT © [Dmitriy Semyushkin](http://devg.ru)
+MIT © [Dmitriy Semyushkin](https://devg.ru)
