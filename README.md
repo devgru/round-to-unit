@@ -1,6 +1,6 @@
 # round-to-precision
 
-> Round a number to a nearest multiple to . Useful in user interfaces.
+> Round a number to a nearest multiple of specified step. Useful in user interfaces.
 
 This library provides rounding function which is useful when you need to convert some raw user input (e.g. pointer coordinates) into nice values that are multiples to specified *step*.
 
