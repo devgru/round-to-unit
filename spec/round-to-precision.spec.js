@@ -23,14 +23,14 @@ describe('basic cases', () => {
 });
 
 describe('step < 1', () => {
-  it('should round 1.65 to 1.65', () => {
-    const roundToQuarters = roundTo(.05);
-    expect(roundToQuarters(1.65)).toBe('1.65');
+  it('should round 1.64 to 1.65', () => {
+    const roundTo5Cents = roundTo(.05);
+    expect(roundTo5Cents(1.64)).toBe('1.65');
   });
   
   it('negative case', () => {
-    const roundToQuarters = roundTo(.05);
-    expect(roundToQuarters(-1.65)).toBe('-1.65');
+    const roundTo5Cents = roundTo(.05);
+    expect(roundTo5Cents(-1.64)).toBe('-1.65');
   });
   
   it('should round 10.2 to 10.25', () => {

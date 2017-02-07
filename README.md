@@ -8,6 +8,8 @@ This library provides rounding function which is useful when you need to convert
 ## Installing
 
 ```sh
+$ yarn add round-to-precision
+# or
 $ npm install --save round-to-precision
 ```
 
@@ -40,6 +42,11 @@ An optional *outputType* allows overriding return type of *roundToStep* function
 *roundToStep(value)*
 
 Given a number *value*, rounds *value* and returns it as a *String* or uses provided *outputType* to transform it into another type.
+
+## Development
+
+* Run tests: `yarn test`;
+* Build `yarn build`;
 
 ## License
 
