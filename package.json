@@ -1,11 +1,12 @@
 {
   "name": "round-to-precision",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "react-scripts test"
   },
+  "repository": "devgru/round-to-precision",
   "devDependencies": {
     "react-scripts": "*"
   },
