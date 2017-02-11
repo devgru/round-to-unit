@@ -1,4 +1,4 @@
-const trimTrailingZeros = v => v.replace(/0+$/, '');
+const trimTrailingZeros = v => v.replace(/\.?0+$/, '');
 
 module.exports = function roundToStep(step, outputType = String) {
   const basicRound = v => step * Math.round(v / step);

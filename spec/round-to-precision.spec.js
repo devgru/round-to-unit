@@ -42,6 +42,11 @@ describe('step < 1', () => {
     const roundToQuarters = roundTo(.25);
     expect(roundToQuarters(-10.2)).toBe('-10.25');
   });
+  
+  it('should round 10 to 10', () => {
+    const roundTo5Cents = roundTo(.05);
+    expect(roundTo5Cents(10)).toBe('10');
+  });
 });
 
 describe('"scientific powers" step', () => {
