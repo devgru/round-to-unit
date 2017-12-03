@@ -56,7 +56,7 @@ describe('"scientific powers" step', () => {
     expect(roundToBillions(base + 1)).toBe('1000000000000');
   });
   
-  it('should deal with small numbers', () => {
+  it('should deal with really small numbers', () => {
     const base = 1e-15;
     const roundToFraction = roundTo(base);
     expect(roundToFraction(base)).toBe('0.000000000000001');
