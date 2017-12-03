@@ -1,29 +1,29 @@
-const trimTrailingZeros = v => v.replace(/\.?0+$/, '');
+const toFixedWithoutTrailingZeros = (v, p) => v.toFixed(p).replace(/\.?0+$/, '');
 
-module.exports = function roundToStep(step, outputType = String) {
-  const basicRound = v => step * Math.round(v / step);
-  
-  const log2 = Math.log2(step);
-  
-  // Special case to avoid float errors like
-  // roundToStep(0.05)(1.65) → 1.6500000000000001
-  //
-  // Applies only if
-  // step is < 1, i.e. log2(step) is negative
-  let stepIsLessThan1 = log2 < 0;
-  // and log2(step) is integer
-  let stepIsPowerOf2 = Math.round(log2) !== log2;
-  if (stepIsLessThan1 && stepIsPowerOf2) {
-    let stepString = step.toString();
-    
-    // Even more special case, for really small numbers
-    if (stepString.match('e')) {
-      stepString = trimTrailingZeros(step.toFixed(20));
+module.exports = (step, outputType = String) => {
+  const round = (v) => step * Math.round(v / step);
+  const getFractionalDigitsCount = () => {
+    let stepAsString = step.toString();
+
+    // Specific case for really small numbers
+    if (stepAsString.match('e')) {
+      stepAsString = toFixedWithoutTrailingZeros(step, 20);
     }
-    
-    const digitsCount = stepString.length - 2;
-    return v => outputType(trimTrailingZeros(basicRound(v).toFixed(digitsCount)));
+
+    return stepAsString.length - 2;
+  };
+
+  let format = Object;
+
+  // Specific case to avoid float errors like
+  // roundTo(0.05)(1.65) → "1.6500000000000001"
+  //
+  // Applies if step is < 1 and is not a power of 2
+  // (which is where JS will lose precision).
+  if (step < 1 && Math.log2(step) % 1 !== 0) {
+    format = (n) => toFixedWithoutTrailingZeros(n, getFractionalDigitsCount());
   }
+
   // General case
-  return v => outputType(basicRound(v));
+  return (v) => outputType(format(round(v)));
 };
