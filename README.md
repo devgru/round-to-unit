@@ -1,54 +1,44 @@
-# round-to-precision
+# round-to-unit
 
-> Round a number to a nearest multiple of specified step. Useful in user interfaces.
+> Number-rounding and formatting library with focus on correct string representation. Useful in user interfaces and data visualizations.
 
-This library provides rounding function converting raw user input (e.g. pointer coordinates) into nice values that are multiples to specified *step*.
+This library provides rounding function converting raw user input (e.g. pointer coordinates) into nice values that are multiples to specified `unit`.
 
-By default, library outputs strings. This behaviour can be overriden.
-
-## Installing
-
-```sh
-$ yarn add round-to-precision
-# or
-$ npm install --save round-to-precision
-```
+By default, library outputs strings. This behaviour can be overridden.
 
 ## Usage
 
 ```js
-const roundTo = require('round-to-precision');
+import { roundToUnit } from 'round-to-unit';
 
-const roundToTens = roundTo(10);
-roundToTens(52.65);
-//=> "50"
+const roundToQuarters = roundToUnit('0.25');
+roundToQuarters(-0.7); // "-0.75"
 
-const roundToQuarters = roundTo(0.25);
-roundToQuarters(-0.7);
-//=> "-0.75"
-
-const roundToOneTenths = roundTo(0.1, Number);
-roundToOneTenths(0.36);
-//=> 0.4
+const roundToTenths = roundToUnit('0.1', Number);
+roundToTenths(0.36); // 0.4
 ```
+
+## NPM package
+
+Install `round-to-unit@2`, it has no dependencies.
 
 ## API Reference
 
-*roundTo(step, [outputType = String])*
+`roundToUnit(unit, [outputType = String])`
 
-Given a positive number *step*, returns a *roundToStep* function.
+Given a string representing positive finite number `unit`, returns a `roundToSpecifiedUnit` function.
 
-An optional *outputType* allows overriding return type of *roundToStep* function, e.g. set it to *Number*.
+Provide optional `outputType` to override return type of `roundToSpecifiedUnit` function.
 
-*roundToStep(value)*
+`roundToSpecifiedUnit(input)`
 
-Given a number *value*, rounds *value* and returns it as a *String* or uses provided *outputType* to transform it into another type.
+Given a number `input`, rounds it to specified `unit` and transforms it to `outputType`.
 
 ## Development
 
-* Run tests: `yarn test`;
-* Build `yarn build`;
+* Build `bun run prepack`;
+* Run tests: `bun test`;
 
 ## License
 
-MIT © [Dmitriy Semyushkin](https://devg.ru)
+MIT © [Dima Semyushkin](https://devg.ru)

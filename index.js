@@ -1,29 +1,47 @@
-const toFixedWithoutTrailingZeros = (v, p) => v.toFixed(p).replace(/\.?0+$/, '');
+const toFixedWithoutTrailingZeros = (number, fractionDigits) =>
+  number.toFixed(fractionDigits).replace(/\.?0+$/, "");
 
-module.exports = (step, outputType = String) => {
-  const round = (v) => step * Math.round(v / step);
-  const getFractionalDigitsCount = () => {
-    let stepAsString = step.toString();
+const checkInput = (number) => {
+  if (!Number.isFinite(number)) {
+    throw new Error("Input should be a finite number");
+  }
+  return number;
+};
 
-    // Specific case for really small numbers
-    if (stepAsString.match('e')) {
-      stepAsString = toFixedWithoutTrailingZeros(step, 20);
-    }
+export const roundToUnit = (unitString, outputType = String) => {
+  if (typeof unitString !== "string") {
+    throw new Error("Unit should be a string");
+  }
+  const unit = Number(unitString);
+  if (!Number.isFinite(unit) || unit < 0) {
+    throw new Error("Unit should be coercible to a positive finite number");
+  }
+  if ((unit * 2) / 2 !== (unit / 2) * 2) {
+    throw new Error("Unit should be consistent");
+  }
+  const roundToUnit = (number) => unit * Math.round(number / unit);
 
-    return stepAsString.length - 2;
-  };
+  const isFractionalUnit = unitString.includes(".");
 
-  let format = Object;
-
-  // Specific case to avoid float errors like
-  // roundTo(0.05)(1.65) → "1.6500000000000001"
-  //
-  // Applies if step is < 1 and is not a power of 2
-  // (which is where JS will lose precision).
-  if (step < 1 && Math.log2(step) % 1 !== 0) {
-    format = (n) => toFixedWithoutTrailingZeros(n, getFractionalDigitsCount());
+  if (!isFractionalUnit) {
+    return (number) => outputType(String(roundToUnit(checkInput(number))));
   }
 
-  // General case
-  return (v) => outputType(format(round(v)));
+  const targetFractionDigits = unitString.split(".")[1].length;
+
+  const formatWithTrailingZeros = (input) => {
+    const string = toFixedWithoutTrailingZeros(input, targetFractionDigits);
+    const sum = string.length + targetFractionDigits;
+    if (string.includes("e")) {
+      throw new Error("Input is not to scale");
+    }
+    if (string.includes(".")) {
+      const fractionDigits = string.split(".")[1].length;
+      return string.padEnd(sum - fractionDigits, "0");
+    }
+    return (string + ".").padEnd(sum + 1, "0");
+  };
+
+  return (number) =>
+    outputType(formatWithTrailingZeros(roundToUnit(checkInput(number))));
 };

@@ -1,16 +1,28 @@
 {
-  "name": "round-to-precision",
-  "version": "1.0.4",
-  "description": "",
-  "main": "index.js",
+  "name": "round-to-unit",
+  "version": "2.0.0",
+  "description": "Number-rounding and formatting library with focus on correct string representation. roundToUnit('0.25')(0.4) // 0.50",
+  "license": "MIT",
+  "author": "Dima Semyushkin <git@devg.ru> (https://devg.ru)",
+  "repository": {
+    "url": "git+https://github.com/devgru/round-to-unit.git"
+  },
+  "type": "module",
+  "main": "dist.js",
+  "files": [
+    "dist.js"
+  ],
   "scripts": {
-    "test": "react-scripts test"
+    "prepack": "bun build index.js --minify --outfile=dist.js",
+    "test": "bun test"
   },
-  "repository": "devgru/round-to-precision",
+  "types": "index.d.ts",
   "devDependencies": {
-    "react-scripts": "*"
+    "prettier": "3"
   },
-  "keywords": [],
-  "author": "",
-  "license": "MIT"
+  "keywords": [
+    "number formatting",
+    "number rounding",
+    "round to unit"
+  ]
 }
